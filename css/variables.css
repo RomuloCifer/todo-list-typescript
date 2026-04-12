@@ -1,6 +1,6 @@
 :root {
   /* Paleta principal */
-  --color-primary-dark: #082a30;
+  --color-primary-dark: #002329;
   --color-accent: #ff4c35;
   --color-success: #09d17c;
 
@@ -8,7 +8,8 @@
   --color-background: #f0f5f4;
   --color-surface: #ffffff;
   --color-surface-soft: #f8fbfa;
-  --color-text: #133138;
+  --color-text-dark: #133138;
+  --color-text-light: #f8fbfa;
   --color-text-muted: #5b7378;
   --color-border: #d6e3e1;
 
