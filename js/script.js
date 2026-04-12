@@ -16,20 +16,38 @@ function renderTasks () {
         text.classList.add("task-text");
         text.textContent = task.title;
 
+        if (task.completed) {
+            text.classList.add("completed");
+        }
+        const completeButton = document.createElement("button");
+        completeButton.classList.add("complete-button");
+        completeButton.textContent = task.completed ? "Desmarcar" : "Concluir";
+        completeButton.addEventListener("click", function() {
+        alternateCompleteTask(task.id);
+    });
+
         const removeButton = document.createElement("button");
         removeButton.classList.add("delete-button");
         removeButton.textContent = "Remover";
-
         removeButton.addEventListener("click", function() {
             removeTask(task.id);
         })
 
-        item.appendChild(text)
+        item.appendChild(text);
+        item.appendChild(completeButton);
         item.appendChild(removeButton);
         list_.appendChild(item);
     }
 }
 
+function alternateCompleteTask (idTask) {
+    for (const task of tasks) {
+        if (task.id === idTask) {
+            task.completed = !task.completed;
+        }
+    }
+    renderTasks()
+}
 function removeTask(idTask) {
     const newTasks = tasks.filter(function (task) {
         return task.id !==idTask; // Mantém toda a lista que o ID é diferente da task

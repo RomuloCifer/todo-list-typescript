@@ -80,3 +80,16 @@ header h1 {
     cursor: pointer;
 }
 
+.complete-button {
+    padding: 8px;
+    border: none;
+    border-radius: 7px;
+    background-color: #2e8b57;
+    color:white;
+    cursor: pointer;
+}
+
+.completed {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
