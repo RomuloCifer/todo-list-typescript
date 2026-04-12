@@ -1,11 +1,5 @@
 @import url("./variables.css");
 
-body {
-    margin: 0;
-    font-family: sans-serif;
-    background: var(--color-background);
-    color: var(--color-text);
-}
 * {
     margin: 0px;
     padding: 0px;
