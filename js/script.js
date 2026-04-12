@@ -61,6 +61,7 @@ form.addEventListener("submit", function (event) {
     event.preventDefault(); // ñ recarregar a página
     if (!form || !input || !list_) {
     console.error("Elementos do formulario nao encontrados no DOM.");
+}
 
     const typedText = input.value.trim();
     if (typedText === "") {
