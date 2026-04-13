@@ -3,7 +3,7 @@ const form = document.querySelector(".task-form");
 const input = document.querySelector(".task-input");
 const list_ = document.querySelector(".task-list");
 
-const tasks =[];
+let tasks = [];
 
 function renderTasks () {
     list_.innerHTML = "";
@@ -49,11 +49,10 @@ function alternateCompleteTask (idTask) {
     renderTasks()
 }
 function removeTask(idTask) {
-    const newTasks = tasks.filter(function (task) {
+        tasks = tasks.filter(function (task) {
         return task.id !==idTask; // Mantém toda a lista que o ID é diferente da task
     });
-    tasks.length = 0; //zera o array antigo e...
-    tasks.push(...newTasks); // adiciona todas as tasks novamente.
+
     renderTasks();
 }
 
