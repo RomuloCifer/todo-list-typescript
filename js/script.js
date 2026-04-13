@@ -48,22 +48,14 @@ function renderTasks () {
     }
 }
 
-function editTask (idTask) {
-    for (const task of tasks) {
+function modifyEditing(idTask) {
+    for (let task of tasks) {
         if (task.id === idTask) {
-            let newTitle = prompt("Digite a nova tarefa", task.title);
-            if (newTitle === null) {
-                return;
-            }
-            newTitle = newTitle.trim();
-            if (newTitle === "") {
-                return;
-            }
-            task.title = newTitle;
-            break;
+            task.editing = true;
+        } else {
+            task.editing = false;
         }
     }
-    renderTasks()
 }
 
 function alternateCompleteTask (idTask) {
@@ -75,10 +67,17 @@ function alternateCompleteTask (idTask) {
     renderTasks()
 }
 function removeTask(idTask) {
-        tasks = tasks.filter(function (task) {
-        return task.id !==idTask; // Mantém toda a lista que o ID é diferente da task
-    });
-
+    const index = tasks.findIndex(function(task) {
+        console.log(task.id === idTask, task.id)
+        return task.id === idTask;
+    })
+    if (index === -1) {
+        return;
+    }
+    tasks = [
+        ...tasks.slice(0, index),
+        ...tasks.slice(index + 1)
+    ]
     renderTasks();
 }
 
@@ -97,6 +96,7 @@ form.addEventListener("submit", function (event) {
         id: Date.now(),
         title: typedText,
         completed: false,
+        editing: false,
     }
     tasks.push(newTask);
     input.value = "";
