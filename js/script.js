@@ -26,6 +26,13 @@ function renderTasks () {
         alternateCompleteTask(task.id);
     });
 
+        const editButton = document.createElement("button");
+        editButton.classList.add("edit-button");
+        editButton.textContent ="Editar";
+        editButton.addEventListener("click", function() {
+            editTask(task.id);
+        })
+
         const removeButton = document.createElement("button");
         removeButton.classList.add("delete-button");
         removeButton.textContent = "Remover";
@@ -34,10 +41,29 @@ function renderTasks () {
         })
 
         item.appendChild(text);
+        item.appendChild(editButton);
         item.appendChild(completeButton);
         item.appendChild(removeButton);
         list_.appendChild(item);
     }
+}
+
+function editTask (idTask) {
+    for (const task of tasks) {
+        if (task.id === idTask) {
+            let newTitle = prompt("Digite a nova tarefa", task.title);
+            if (newTitle === null) {
+                return;
+            }
+            newTitle = newTitle.trim();
+            if (newTitle === "") {
+                return;
+            }
+            task.title = newTitle;
+            break;
+        }
+    }
+    renderTasks()
 }
 
 function alternateCompleteTask (idTask) {
