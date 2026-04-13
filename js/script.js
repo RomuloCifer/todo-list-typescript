@@ -11,7 +11,27 @@ function renderTasks () {
     for (const task of tasks) {
         const item = document.createElement("li");
         item.classList.add("task-item");
+        
+        if (task.editing) {
+            const editInput =document.createElement("input");
+            editInput.classList.add("task-edit-input");
+            editInput.value = task.title;
 
+            editInput.addEventListener("keydown", function(event) {
+                if (event.key === "Enter") {
+                    saveEditTask(task.id, editInput.value);
+                }
+                if (event.key === "Escape") {
+                    task.editing = false;
+                    renderTasks();
+                }
+            })
+            editInput.addEventListener("blur", function() {
+                saveEditTask(task.id, editInput.value);
+            });
+            item.appendChild(editInput);
+            list_.appendChild(item);
+        } else {
         const text = document.createElement("span");
         text.classList.add("task-text");
         text.textContent = task.title;
@@ -45,17 +65,7 @@ function renderTasks () {
         item.appendChild(completeButton);
         item.appendChild(removeButton);
         list_.appendChild(item);
-    }
-}
-
-function modifyEditing(idTask) {
-    for (let task of tasks) {
-        if (task.id === idTask) {
-            task.editing = true;
-        } else {
-            task.editing = false;
-        }
-    }
+    }}
 }
 
 function alternateCompleteTask (idTask) {
@@ -81,6 +91,30 @@ function removeTask(idTask) {
     renderTasks();
 }
 
+function editTask(idTask) {
+    for (let task of tasks) {
+        if (task.id === idTask) {
+            task.editing = true;
+        } else {
+            task.editing = false;
+        }
+    }
+    renderTasks();
+}
+
+function saveEditTask(idTask, newTitle) {
+    newTitle = newTitle.trim();
+    
+    for (let task of tasks) {
+        if (task.id === idTask) {
+            if (newTitle !== "") {
+                task.title = newTitle;
+            }
+            task.editing = false;
+        }
+    }
+    renderTasks();
+}
 form.addEventListener("submit", function (event) {
     event.preventDefault(); // ñ recarregar a página
     if (!form || !input || !list_) {
