@@ -1,0 +1,52 @@
+# Dependências (reinstalar com npm install)
+node_modules/
+
+# Saída de build TypeScript / bundlers (ajuste se usar outro nome de pasta)
+dist/
+build/
+out/
+.next/
+.nuxt/
+.vite/
+
+# Cache e artefatos do TypeScript
+*.tsbuildinfo
+
+# Logs e debug npm/yarn/pnpm
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Variáveis de ambiente e segredos (mantenha um .env.example versionado se precisar)
+.env
+.env.*
+!.env.example
+
+# Testes / cobertura (se adicionar depois)
+coverage/
+.nyc_output/
+*.lcov
+
+# Sistema operacional
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Editores e IDEs (configuração local)
+.idea/
+*.swp
+*.swo
+*~
+
+# Histórico local de extensões do VS Code / Cursor
+.history/
+
+# Arquivos temporários
+*.tmp
+*.temp
+.cache/
