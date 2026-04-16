@@ -7,17 +7,19 @@ type Task = {
 
 const form = document.querySelector<HTMLFormElement>(".task-form");
 const input = document.querySelector<HTMLInputElement>(".task-input");
-const list_ = document.querySelector<HTMLUListElement>(".task-list");
+const list = document.querySelector<HTMLUListElement>(".task-list");
 
-if (!form || !input ||list_) {
+if (!form || !input || !list) {
     throw new Error("Elementos principais não encontrados...");
 }
+
+const taskList: HTMLUListElement = list;
 
 let tasks: Task[] = [];
 
 
-function renderTasks () {
-    list_.innerHTML = "";
+function renderTasks (taskList: HTMLUListElement) {
+    taskList.innerHTML = "";
 
     for (const task of tasks) {
         const item = document.createElement("li");
@@ -37,7 +39,7 @@ function renderTasks () {
                 if (event.key === "Escape") {
                     canceleouEdicao = true;
                     task.editing = false;
-                    renderTasks();
+                    renderTasks(taskList);
                 }
             })
             editInput.addEventListener("blur", function() {
@@ -46,7 +48,7 @@ function renderTasks () {
                 }
             });
             item.appendChild(editInput);
-            list_.appendChild(item);
+            taskList.appendChild(item);
         } else {
         const text = document.createElement("span");
         text.classList.add("task-text");
@@ -80,19 +82,19 @@ function renderTasks () {
         item.appendChild(editButton);
         item.appendChild(completeButton);
         item.appendChild(removeButton);
-        list_.appendChild(item);
+        taskList.appendChild(item);
     }}
 }
 
-function alternateCompleteTask (idTask) {
+function alternateCompleteTask (idTask: number) : void {
     for (const task of tasks) {
         if (task.id === idTask) {
             task.completed = !task.completed;
         }
     }
-    renderTasks()
+    renderTasks(taskList)
 }
-function removeTask(idTask) {
+function removeTask(idTask : number) : void {
     const index = tasks.findIndex(function(task) {
         console.log(task.id === idTask, task.id)
         return task.id === idTask;
@@ -104,10 +106,10 @@ function removeTask(idTask) {
         ...tasks.slice(0, index),
         ...tasks.slice(index + 1)
     ]
-    renderTasks();
+    renderTasks(taskList);
 }
 
-function editTask(idTask) {
+function editTask(idTask : number) : void {
     for (let task of tasks) {
         if (task.id === idTask) {
             task.editing = true;
@@ -115,10 +117,10 @@ function editTask(idTask) {
             task.editing = false;
         }
     }
-    renderTasks();
+    renderTasks(taskList);
 }
 
-function saveEditTask(idTask, newTitle) {
+function saveEditTask(idTask : number, newTitle : string) : void {
     newTitle = newTitle.trim();
     
     for (let task of tasks) {
@@ -129,28 +131,26 @@ function saveEditTask(idTask, newTitle) {
             task.editing = false;
         }
     }
-    renderTasks();
+    renderTasks(taskList);
 }
 form.addEventListener("submit", function (event) {
     event.preventDefault(); // ñ recarregar a página
-    if (!form || !input || !list_) {
-    console.error("Elementos do formulario nao encontrados no DOM.");
-}
+;
 
     const typedText = input.value.trim();
     if (typedText === "") {
         return;
     }
 
-    const newTask = {
+    const newTask: Task = {
         id: Date.now(),
         title: typedText,
         completed: false,
         editing: false,
-    }
+    };
     tasks.push(newTask);
     input.value = "";
-    renderTasks();
+    renderTasks(taskList);
     console.log(tasks);
-})
+});
 
