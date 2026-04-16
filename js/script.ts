@@ -1,9 +1,20 @@
+type Task = {
+    id: number;
+    title: string;
+    completed: boolean;
+    editing: boolean;
+};
 
-const form = document.querySelector(".task-form");
-const input = document.querySelector(".task-input");
-const list_ = document.querySelector(".task-list");
+const form = document.querySelector<HTMLFormElement>(".task-form");
+const input = document.querySelector<HTMLInputElement>(".task-input");
+const list_ = document.querySelector<HTMLUListElement>(".task-list");
 
-let tasks = [];
+if (!form || !input ||list_) {
+    throw new Error("Elementos principais não encontrados...");
+}
+
+let tasks: Task[] = [];
+
 
 function renderTasks () {
     list_.innerHTML = "";
