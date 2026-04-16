@@ -1,19 +1,5 @@
-type Task = {
-    id: number;
-    title: string;
-    completed: boolean;
-    editing: boolean;
-};
-
-const form = document.querySelector<HTMLFormElement>(".task-form");
-const input = document.querySelector<HTMLInputElement>(".task-input");
-const list = document.querySelector<HTMLUListElement>(".task-list");
-
-if (!form || !input || !list) {
-    throw new Error("Elementos principais não encontrados...");
-}
-
-const taskList: HTMLUListElement = list;
+import type { Task } from "./types/task";
+import { form, input, taskList } from "./ui/elements";
 
 let tasks: Task[] = [];
 
