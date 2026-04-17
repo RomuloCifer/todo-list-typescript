@@ -8,7 +8,8 @@
     "strict": true, // deus mim ajude 
     "sourceMap": true,
     "noImplicitAny": true, // tudo com tipo
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": ["jest"]
   },
   "include": ["js/**/*.ts"]
 }

@@ -2,10 +2,14 @@
   "name": "to-do-list",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc", 
-    "watch": "tsc --watch"
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "test": "jest"
   },
   "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "jest": "^30.3.0",
+    "ts-jest": "^29.4.9",
     "typescript": "^6.0.2"
   }
 }
