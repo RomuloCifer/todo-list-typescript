@@ -1,5 +1,14 @@
 import type { Task } from "./types/task";
-import { form, input, taskList } from "./ui/elements";
+import { form, input, taskList } from "./ui/elements.js";
+
+import {
+    createTask,
+    addTask,
+    alternateCompleteTask,
+    removeTask,
+    editTask,
+    saveEditTask,
+} from "./logic/task-logic.js";
 
 let tasks: Task[] = [];
 
@@ -20,7 +29,7 @@ function renderTasks (taskList: HTMLUListElement) {
 
             editInput.addEventListener("keydown", function(event) {
                 if (event.key === "Enter") {
-                    saveEditTask(task.id, editInput.value);
+                    saveEditTask(tasks, task.id, editInput.value);
                 }
                 if (event.key === "Escape") {
                     canceleouEdicao = true;
@@ -30,7 +39,7 @@ function renderTasks (taskList: HTMLUListElement) {
             })
             editInput.addEventListener("blur", function() {
                 if (!canceleouEdicao) {
-                saveEditTask(task.id, editInput.value);
+                saveEditTask(tasks, task.id, editInput.value);
                 }
             });
             item.appendChild(editInput);
@@ -47,21 +56,22 @@ function renderTasks (taskList: HTMLUListElement) {
         completeButton.classList.add("complete-button");
         completeButton.textContent = task.completed ? "Desmarcar" : "Concluir";
         completeButton.addEventListener("click", function() {
-        alternateCompleteTask(task.id);
+        tasks = alternateCompleteTask(tasks, task.id);
+        renderTasks(taskList)
     });
 
         const editButton = document.createElement("button");
         editButton.classList.add("edit-button");
         editButton.textContent ="Editar";
         editButton.addEventListener("click", function() {
-            editTask(task.id);
+            editTask(tasks, task.id);
         })
 
         const removeButton = document.createElement("button");
         removeButton.classList.add("delete-button");
         removeButton.textContent = "Remover";
         removeButton.addEventListener("click", function() {
-            removeTask(task.id);
+            removeTask(tasks, task.id);
         })
 
         item.appendChild(text);
@@ -72,53 +82,7 @@ function renderTasks (taskList: HTMLUListElement) {
     }}
 }
 
-function alternateCompleteTask (idTask: number) : void {
-    for (const task of tasks) {
-        if (task.id === idTask) {
-            task.completed = !task.completed;
-        }
-    }
-    renderTasks(taskList)
-}
-function removeTask(idTask : number) : void {
-    const index = tasks.findIndex(function(task) {
-        console.log(task.id === idTask, task.id)
-        return task.id === idTask;
-    })
-    if (index === -1) {
-        return;
-    }
-    tasks = [
-        ...tasks.slice(0, index),
-        ...tasks.slice(index + 1)
-    ]
-    renderTasks(taskList);
-}
 
-function editTask(idTask : number) : void {
-    for (let task of tasks) {
-        if (task.id === idTask) {
-            task.editing = true;
-        } else {
-            task.editing = false;
-        }
-    }
-    renderTasks(taskList);
-}
-
-function saveEditTask(idTask : number, newTitle : string) : void {
-    newTitle = newTitle.trim();
-    
-    for (let task of tasks) {
-        if (task.id === idTask) {
-            if (newTitle !== "") {
-                task.title = newTitle;
-            }
-            task.editing = false;
-        }
-    }
-    renderTasks(taskList);
-}
 form.addEventListener("submit", function (event) {
     event.preventDefault(); // ñ recarregar a página
 ;
