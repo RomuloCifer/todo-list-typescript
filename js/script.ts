@@ -29,7 +29,8 @@ function renderTasks (taskList: HTMLUListElement) {
 
             editInput.addEventListener("keydown", function(event) {
                 if (event.key === "Enter") {
-                    saveEditTask(tasks, task.id, editInput.value);
+                    tasks = saveEditTask(tasks, task.id, editInput.value);
+                    renderTasks(taskList);
                 }
                 if (event.key === "Escape") {
                     canceleouEdicao = true;
@@ -39,7 +40,8 @@ function renderTasks (taskList: HTMLUListElement) {
             })
             editInput.addEventListener("blur", function() {
                 if (!canceleouEdicao) {
-                saveEditTask(tasks, task.id, editInput.value);
+                tasks = saveEditTask(tasks, task.id, editInput.value);
+                renderTasks(taskList);
                 }
             });
             item.appendChild(editInput);
@@ -64,14 +66,16 @@ function renderTasks (taskList: HTMLUListElement) {
         editButton.classList.add("edit-button");
         editButton.textContent ="Editar";
         editButton.addEventListener("click", function() {
-            editTask(tasks, task.id);
+            tasks = editTask(tasks, task.id)
+            renderTasks(taskList);
         })
 
         const removeButton = document.createElement("button");
         removeButton.classList.add("delete-button");
         removeButton.textContent = "Remover";
         removeButton.addEventListener("click", function() {
-            removeTask(tasks, task.id);
+            tasks = removeTask(tasks, task.id)
+            renderTasks(taskList);
         })
 
         item.appendChild(text);
@@ -92,13 +96,8 @@ form.addEventListener("submit", function (event) {
         return;
     }
 
-    const newTask: Task = {
-        id: Date.now(),
-        title: typedText,
-        completed: false,
-        editing: false,
-    };
-    tasks.push(newTask);
+    const newTask =  createTask(typedText);
+    tasks = addTask(tasks, newTask);
     input.value = "";
     renderTasks(taskList);
     console.log(tasks);
