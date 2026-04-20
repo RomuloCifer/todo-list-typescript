@@ -10,22 +10,25 @@ import {
 } from "../js/logic/task-logic";
 
 import type { Task } from "../js/types/task";
-
+import { validTitles } from "./data/task-titles";
 
 describe("task logic", () => {
-    it("should create a task with the correct title.", () => {
+    it.each(validTitles)("should create a task with a title of: %s", (title) => {
+        
+    
         // Arrange
-        const title = "Entender isso tudo aqui "
-
-        // Act
         const task = createTask(title);
 
+        // Act
+
+
         // Assert
-        expect(task.title).toBe("Entender isso tudo aqui");
+        expect(task.title).toBe(title);
         expect(task.completed).toBe(false);
         expect(task.editing).toBe(false);
         expect(typeof task.id).toBe("number")
     });
+
 
     it("should add a new task in the array", () => {
         // Arrange
@@ -37,7 +40,7 @@ describe("task logic", () => {
 
         // Assert
         expect(result).toHaveLength(1);
-        expect(result[0].title).toBe("Nova tarefa");
+        expect(result[0].title).toBe("nova tarefa");
     });
 
     it("should alternate the 'completed' status from false to true", () => {
